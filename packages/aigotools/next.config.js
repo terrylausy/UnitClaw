@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-}
+};
 
-module.exports = nextConfig
+// 引入 next-intl 插件，并指定配置文件路径
+const withNextIntl = require('next-intl/plugin')('./i18n.ts');
+
+module.exports = withNextIntl(nextConfig);
