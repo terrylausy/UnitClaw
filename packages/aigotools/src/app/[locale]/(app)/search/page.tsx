@@ -23,12 +23,12 @@ export default async function Page({
   searchParams,
 }: {
   searchParams: {
-    s: string;
-    c: string;
+    s?: string;
+    c?: string;
   };
 }) {
-  const rawCategory = searchParams["c"] || "";
-  const rawSearch = searchParams["s"] || "";
+  const rawCategory = searchParams.c || "";
+  const rawSearch = searchParams.s || "";
   const category = decodeURIComponent(rawCategory.toString());
   const search = decodeURIComponent(rawSearch.toString());
 
