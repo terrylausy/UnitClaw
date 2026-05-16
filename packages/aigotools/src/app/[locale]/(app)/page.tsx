@@ -1,45 +1,13 @@
-import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import Container from "@/components/common/container";
-import Hero from "@/components/index/hero";
-import Search from "@/components/index/search";
-import SiteGroup from "@/components/common/sites-group";
-import { getFeaturedSites, getLatestSites } from "@/lib/actions";
+import NavBar from "@/components/common/nav-bar";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
-  const t = await getTranslations({
-    locale: params.locale,
-    namespace: "index",
-  });
+export const dynamic = 'force-dynamic';
 
-  return {
-    title: t("metadata.title"),
-  };
-}
-
-export default async function Page() {
-  const t = await getTranslations("index");
-  const [featuredSites, latestSites] = await Promise.all([
-    getFeaturedSites(),
-    getLatestSites(),
-  ]);
-
+export default function Page() {
   return (
-    <>
-      <Container>
-        <Hero />
-        <Search />
-        <SiteGroup id="featured" sites={featuredSites} title={t("featured")} />
-        <SiteGroup id="latest" sites={latestSites} title={t("latest")} />
-      </Container>
-    </>
+    <Container>
+      <NavBar name={["Home"]} />
+      <div className="p-6">Home Page</div>
+    </Container>
   );
-}
-
-export async function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "cn" }];
 }
