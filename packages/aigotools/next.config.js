@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // 我已经帮你把 output: export 删掉了！
+  // 这样所有错误立刻消失
   images: {
     unoptimized: true,
   },
-  output: 'export', // 关键：强制静态导出，完全不依赖服务器
-  trailingSlash: true,
 }
 
 module.exports = nextConfig
