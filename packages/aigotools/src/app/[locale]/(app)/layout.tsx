@@ -14,3 +14,6 @@ export default async function AppLayout({
     </>
   );
 }
+export async function generateStaticParams() {
+  return [{ locale: 'en' }, { locale: 'zh' }];
+}
