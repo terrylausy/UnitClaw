@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-
 import Container from "@/components/common/container";
 import NavBar from "@/components/common/nav-bar";
 import InfiniteSearch from "@/components/search/infinite-search";
@@ -8,9 +7,8 @@ import InfiniteSearch from "@/components/search/infinite-search";
 export async function generateMetadata({
   params,
 }: {
-  params: { site: string; locale: string };
+  params: { locale: string };
 }): Promise<Metadata> {
-  // 这里必须 await getTranslations
   const t = await getTranslations({
     locale: params.locale,
     namespace: "search",
@@ -21,7 +19,7 @@ export async function generateMetadata({
   };
 }
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
   searchParams: {
@@ -40,4 +38,8 @@ export default function Page({
       <InfiniteSearch />
     </Container>
   );
+}
+
+export async function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "cn" }];
 }
