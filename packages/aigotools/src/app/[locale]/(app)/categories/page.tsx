@@ -32,6 +32,6 @@ export default function Page() {
   );
 }
 export async function generateStaticParams() {
-  // 列出你支持的所有语言，比如 ['en', 'zh']
-  return [{ locale: 'en' }, { locale: 'zh' }];
+  // 列出你支持的所有语言，比如 ['en', 'cn']
+  return [{ locale: 'en' }, { locale: 'cn' }];
 }
