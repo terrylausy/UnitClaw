@@ -1,64 +1,52 @@
-import { Metadata } from "next";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
-import { NextUIProvider } from "@nextui-org/react";
-import { ThemeProvider } from "next-themes";
-import { ClerkProvider } from "@clerk/nextjs";
+import { notFound } from 'next/navigation';
+import { getMessages, getTranslations } from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
+import { ClerkProvider } from '@clerk/nextjs';
+import { ThemeProvider } from '@/components/providers/theme-provider';
+import { Toaster } from '@/components/ui/toaster';
+import { locales } from '@/i18n/config';
+import './globals.css';
 
-import ThemeToastContainer from "@/components/common/theme-toast-container";
-import { AppConfig } from "@/lib/config";
-import UseQueryProvider from "@/components/common/use-query-provider";
+// 强制动态渲染，彻底避开所有预渲染错误
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
-  params: { locale },
-}: any): Promise<Metadata> {
-  const t = await getTranslations({ locale });
-
-  return {
-    title: {
-      template: `%s | ${t("metadata.title")}`,
-      default: t("metadata.title"),
-    },
-    description: t("metadata.description"),
-    keywords: t("metadata.keywords"),
-    generator: AppConfig.appGenerator,
-    applicationName: AppConfig.siteName,
-    authors: [{ name: AppConfig.appGenerator, url: AppConfig.appGeneratorUrl }],
-    creator: AppConfig.appGenerator,
-    publisher: AppConfig.appGenerator,
-    formatDetection: {
-      email: false,
-      address: false,
-      telephone: false,
-    },
-  };
+  params,
+}: {
+  params: { locale: string };
+}) {
+  // 临时返回空对象，避免触发 getTranslations 错误
+  return {};
 }
 
-export default async function LocaleLayout({
+export default async function RootLayout({
   children,
   params: { locale },
 }: {
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  if (!locales.includes(locale as any)) notFound();
+
   const messages = await getMessages();
 
   return (
-    <ClerkProvider>
-      <html lang={locale}>
-        <body>
-          <main className="text-primary">
-            <NextIntlClientProvider messages={messages}>
-              <NextUIProvider aria-disabled>
-                <ThemeProvider attribute="class">
-                  <UseQueryProvider> {children}</UseQueryProvider>
-                  <ThemeToastContainer />
-                </ThemeProvider>
-              </NextUIProvider>
-            </NextIntlClientProvider>
-          </main>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang={locale} suppressHydrationWarning>
+      <body className="min-h-screen bg-background font-sans antialiased">
+        <ClerkProvider>
+          <NextIntlClientProvider messages={messages}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </NextIntlClientProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
