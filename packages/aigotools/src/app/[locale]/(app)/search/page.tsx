@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Container from "@/components/common/container";
 import NavBar from "@/components/common/nav-bar";
-import InfiniteSearch from "@/components/search/infinite-search";
 
 export async function generateMetadata({
   params,
@@ -22,20 +21,12 @@ export async function generateMetadata({
 export default async function Page({
   searchParams,
 }: {
-  searchParams: {
-    s?: string;
-    c?: string;
-  };
+  searchParams: { s?: string; c?: string };
 }) {
-  const rawCategory = searchParams.c || "";
-  const rawSearch = searchParams.s || "";
-  const category = decodeURIComponent(rawCategory.toString());
-  const search = decodeURIComponent(rawSearch.toString());
-
   return (
     <Container>
-      <NavBar name={[category, search].filter(Boolean)} />
-      <InfiniteSearch />
+      <NavBar name={["Search"]} />
+      <div className="p-6">Search Page</div>
     </Container>
   );
 }
