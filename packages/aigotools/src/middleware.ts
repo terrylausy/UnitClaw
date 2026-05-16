@@ -2,8 +2,7 @@ import createMiddleware from 'next-intl/middleware';
 import { clerkMiddleware } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
-const locales = ['en', 'cn'];
-const defaultLocale = 'en';
+import { locales, defaultLocale } from '@/i18n';
 
 const intlMiddleware = createMiddleware({
   locales,
