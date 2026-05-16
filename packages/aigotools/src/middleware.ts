@@ -2,7 +2,9 @@ import createMiddleware from 'next-intl/middleware';
 import { clerkMiddleware } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
-import { locales, defaultLocale } from '@/i18n';
+// 直接在这里定义语言，不依赖任何外部文件
+const locales = ['en', 'cn'];
+const defaultLocale = 'en';
 
 const intlMiddleware = createMiddleware({
   locales,
