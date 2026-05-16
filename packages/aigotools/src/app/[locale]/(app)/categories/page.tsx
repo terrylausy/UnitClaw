@@ -1,7 +1,5 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { useTranslations } from "next-intl";
-
 import CategoriesList from "@/components/categories/categories-list";
 import Container from "@/components/common/container";
 import NavBar from "@/components/common/nav-bar";
@@ -9,7 +7,7 @@ import NavBar from "@/components/common/nav-bar";
 export async function generateMetadata({
   params,
 }: {
-  params: { site: string; locale: string };
+  params: { locale: string };
 }): Promise<Metadata> {
   const t = await getTranslations({
     locale: params.locale,
@@ -21,8 +19,8 @@ export async function generateMetadata({
   };
 }
 
-export default function Page() {
-  const t = useTranslations("categories");
+export default async function Page() {
+  const t = await getTranslations("categories");
 
   return (
     <Container>
@@ -31,7 +29,7 @@ export default function Page() {
     </Container>
   );
 }
+
 export async function generateStaticParams() {
-  // 列出你支持的所有语言，比如 ['en', 'cn']
-  return [{ locale: 'en' }, { locale: 'cn' }];
+  return [{ locale: "en" }, { locale: "cn" }];
 }
