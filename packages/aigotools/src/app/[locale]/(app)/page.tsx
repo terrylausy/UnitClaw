@@ -24,3 +24,6 @@ export default async function Page() {
     </>
   );
 }
+export async function generateStaticParams() {
+  return [{ locale: 'en' }, { locale: 'zh' }];
+}
