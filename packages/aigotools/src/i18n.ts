@@ -1,9 +1,14 @@
-import { useI18n } from 'next-intl';
+import { createI18n } from 'next-intl';
 
-// 旧版 next-intl 兼容写法
-export function useTranslations(namespace: string) {
-  return useI18n().useTranslations(namespace);
-}
+// 旧版 next-intl 配置
+const i18n = createI18n({
+  locales: ['en', 'zh'],
+  defaultLocale: 'en',
+  messages: {
+    en: () => import('../messages/en.json'),
+    zh: () => import('../messages/zh.json'),
+  },
+});
 
-export const locales = ['en', 'zh'];
-export const defaultLocale = 'en';
+export const { useTranslations, useLocale, useMessages } = i18n;
+export default i18n;
