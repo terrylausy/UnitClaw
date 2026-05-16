@@ -1,6 +1,6 @@
 import { createI18nServer } from 'next-intl/server';
 
 export default createI18nServer({
-  locales: ['en', 'zh'],
+  locales: ['en', 'cn'],
   defaultLocale: 'en',
 });
