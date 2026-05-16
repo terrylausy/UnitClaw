@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Container from "@/components/common/container";
-import Form from "@/components/submit/form";
-import Title from "@/components/submit/title";
+import NavBar from "@/components/common/nav-bar";
+import SubmitForm from "@/components/submit/submit-form";
 
 export async function generateMetadata({
   params,
@@ -19,13 +19,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function Submit() {
-  const t = await getTranslations("submit");
-
+export default async function Page() {
   return (
     <Container>
-      <Title />
-      <Form />
+      <NavBar name={["Submit"]} />
+      <SubmitForm />
     </Container>
   );
 }
